@@ -4,7 +4,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  *
  * @author Artur Glyzin.
- * @version 2.0.
+ * @version 3.0.
  * @since 22.03.2019.
  */
 public class ArrayStorage {
@@ -41,15 +41,12 @@ public class ArrayStorage {
      */
 
     Resume get(String uuid) {
-        Resume resume = new Resume();
-        resume.uuid = "В базе нет резюме с таким uuid, пожалуйста введите корректный uuid.";
         for (Resume r : getAll()) {
             if (r.uuid.equals(uuid)) {
-                resume = r;
-                break;
+                return r;
             }
         }
-        return resume;
+        return null;
     }
 
     /**
@@ -61,7 +58,8 @@ public class ArrayStorage {
     void delete(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                System.arraycopy(storage, i + 1, storage, i, storage.length - 1 - i);
+                System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
+                storage[size - 1] = null;
                 size--;
                 break;
             }
