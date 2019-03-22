@@ -4,25 +4,19 @@ import java.util.Arrays;
  * Array based storage for Resumes
  *
  * @author Artur Glyzin.
- * @version 1.0.
+ * @version 2.0.
  * @since 22.03.2019.
  */
 public class ArrayStorage {
-    private int index;
     private int size;
-
-    /**
-     * Resume storage.
-     */
 
     Resume[] storage = new Resume[10000];
 
     /**
-     * Clear storage
+     * Removes all of the resumes from this storage.
      */
 
     void clear() {
-
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
@@ -36,8 +30,7 @@ public class ArrayStorage {
      */
 
     void save(Resume r) {
-        this.storage[index++] = r;
-        size++;
+        storage[size++] = r;
     }
 
     /**
@@ -62,12 +55,12 @@ public class ArrayStorage {
     /**
      * Remove resume from storage.
      *
-     * @param uuid
+     * @param uuid - id resume.
      */
 
     void delete(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i] != null && storage[i].uuid.equals(uuid)) {
+            if (storage[i].uuid.equals(uuid)) {
                 System.arraycopy(storage, i + 1, storage, i, storage.length - 1 - i);
                 size--;
                 break;
@@ -78,6 +71,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
+
     Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
@@ -89,6 +83,6 @@ public class ArrayStorage {
      */
 
     int size() {
-        return this.size;
+        return size;
     }
 }
