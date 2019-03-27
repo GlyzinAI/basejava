@@ -1,3 +1,7 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -8,15 +12,14 @@ import java.util.Arrays;
  * @since 22.03.2019.
  */
 public class ArrayStorage {
+    private Resume[] storage = new Resume[10000];
     private int size;
-
-    Resume[] storage = new Resume[10000];
 
     /**
      * Removes all of the resumes from this storage.
      */
 
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
@@ -29,7 +32,7 @@ public class ArrayStorage {
      * @param r - resume.
      */
 
-    void save(Resume r) {
+    public void save(Resume r) {
         storage[size++] = r;
     }
 
@@ -40,9 +43,9 @@ public class ArrayStorage {
      * @return Resume.
      */
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (Resume r : getAll()) {
-            if (r.uuid.equals(uuid)) {
+            if (r.getUuid().equals(uuid)) {
                 return r;
             }
         }
@@ -55,9 +58,9 @@ public class ArrayStorage {
      * @param uuid - id resume.
      */
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
                 storage[size - 1] = null;
                 size--;
@@ -70,7 +73,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
 
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
@@ -80,7 +83,7 @@ public class ArrayStorage {
      * @return size.
      */
 
-    int size() {
+    public int size() {
         return size;
     }
 }
