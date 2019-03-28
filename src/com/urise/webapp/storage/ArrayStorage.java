@@ -11,9 +11,10 @@ import java.util.Arrays;
  * @version 4.0.
  * @since 28.03.2019.
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
-    private int size;
+public class ArrayStorage implements Storage {
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
+    private int size = 0;
 
     /**
      * Removes all of the resumes from this storage.
@@ -33,7 +34,7 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (getIndex(r.getUuid()) != -1) {
             System.out.println("Resume " + r.getUuid() + " already exist");
-        } else if (size == storage.length) {
+        } else if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow!");
         } else {
             storage[size++] = r;
