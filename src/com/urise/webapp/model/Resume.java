@@ -5,9 +5,9 @@ package com.urise.webapp.model;
  *
  * @author Artur Glyzin.
  * @version 1.0.
- * @since 22.03.2019.
+ * @since 28.03.2019.
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
@@ -38,5 +38,10 @@ public class Resume {
     @Override
     public String toString() {
         return uuid;
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        return uuid.compareTo(o.getUuid());
     }
 }
