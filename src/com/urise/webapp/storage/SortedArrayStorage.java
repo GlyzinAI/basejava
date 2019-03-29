@@ -4,30 +4,31 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
+/**
+ * SortedArrayStorage
+ *
+ * @author Artur Glyzin.
+ * @version 1.0.
+ * @since 29.03.2019.
+ */
+
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
 
+    @Override
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
+        }
     }
 
     @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected void insertElement(Resume r, int index) {
+        if (index < 0) {
+            index = -index - 1;
+        }
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+        storage[index] = r;
     }
 
     @Override
