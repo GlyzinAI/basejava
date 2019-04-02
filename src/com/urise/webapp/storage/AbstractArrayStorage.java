@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @since 29.03.2019.
  */
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
