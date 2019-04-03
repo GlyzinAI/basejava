@@ -6,8 +6,8 @@ import com.urise.webapp.model.Resume;
  * Array based storage for Resumes
  *
  * @author Artur Glyzin.
- * @version 6.0.
- * @since 29.03.2019.
+ * @version 7.0.
+ * @since 03.04.2019.
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
@@ -21,7 +21,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = r;
     }
 
-    protected int getIndex(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
