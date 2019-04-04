@@ -5,6 +5,14 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ListStorage
+ *
+ * @author Artur Glyzin.
+ * @version 1.0.
+ * @since 04.04.2019.
+ */
+
 public class ListStorage extends AbstractStorage {
 
     private List<Resume> list = new ArrayList<>();
