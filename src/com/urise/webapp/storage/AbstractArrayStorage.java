@@ -3,7 +3,9 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * AbstractArrayStorage
@@ -25,10 +27,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
     }
 
     @Override
@@ -61,6 +59,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object index) {
         return (Integer) index >= 0;
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        Resume[] r = Arrays.copyOfRange(storage, 0, size);
+        ArrayList<Resume> resumes = new ArrayList<>(Arrays.asList(r));
+        resumes.sort(RESUME_COMPARATOR);
+        return resumes;
     }
 
     protected abstract void fillDeletedElement(int index);

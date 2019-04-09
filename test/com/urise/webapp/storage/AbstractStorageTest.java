@@ -7,6 +7,8 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -58,11 +60,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] allElements = storage.getAll();
-        assertEquals(3, allElements.length);
-        assertEquals(RESUME_1, allElements[0]);
-        assertEquals(RESUME_2, allElements[1]);
-        assertEquals(RESUME_3, allElements[2]);
+        List<Resume> allElements = storage.getAllSorted();
+        assertEquals(3, allElements.size());
+        assertEquals(RESUME_1, allElements.get(0));
+        assertEquals(RESUME_2, allElements.get(1));
+        assertEquals(RESUME_3, allElements.get(2));
     }
 
     @Test
