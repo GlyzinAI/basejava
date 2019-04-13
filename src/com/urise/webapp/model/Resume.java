@@ -35,7 +35,9 @@ public class Resume {
         this.fullName = fullName;
     }*/
 
-
+    public String getFullName() {
+        return fullName;
+    }
 
     public String getUuid() {
         return uuid;
