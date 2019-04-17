@@ -11,8 +11,8 @@ import java.util.List;
  * AbstractArrayStorage
  *
  * @author Artur Glyzin.
- * @version 1.0.
- * @since 29.03.2019.
+ * @version 2.0.
+ * @since 17.04.2019.
  */
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
@@ -62,11 +62,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    public List<Resume> doCopyAll() {
         Resume[] r = Arrays.copyOfRange(storage, 0, size);
-        ArrayList<Resume> resumes = new ArrayList<>(Arrays.asList(r));
-        resumes.sort(RESUME_COMPARATOR);
-        return resumes;
+        return new ArrayList<>(Arrays.asList(r));
     }
 
     protected abstract void fillDeletedElement(int index);

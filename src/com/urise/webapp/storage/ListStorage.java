@@ -9,8 +9,8 @@ import java.util.List;
  * ListStorage
  *
  * @author Artur Glyzin.
- * @version 1.0.
- * @since 04.04.2019.
+ * @version 2.0.
+ * @since 17.04.2019.
  */
 
 public class ListStorage extends AbstractStorage {
@@ -63,8 +63,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        list.sort(RESUME_COMPARATOR);
-        return list;
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(list);
     }
 }

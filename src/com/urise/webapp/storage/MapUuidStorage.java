@@ -2,17 +2,14 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * MapUuidStorage
  *
  * @author Artur Glyzin.
  * @version 1.0.
- * @since 04.04.2019.
+ * @since 17.04.2019.
  */
 
 public class MapUuidStorage extends AbstractStorage {
@@ -20,37 +17,33 @@ public class MapUuidStorage extends AbstractStorage {
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
-    protected String getSearchKey(String uuid) {
-        Set<String> keys = map.keySet();
-        for (String key : keys) {
-            return key;
-        }
-        return null;
+    protected Object getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected void doUpdate(Resume r, Object key) {
-        map.put(key.toString(), r);
+    protected void doUpdate(Resume r, Object uuid) {
+        map.put((String) uuid, r);
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return false;
+    protected boolean isExist(Object uuid) {
+        return map.containsKey((String) uuid);
     }
 
     @Override
-    protected void doSave(Resume r, Object key) {
-        map.put(key.toString(), r);
+    protected void doSave(Resume r, Object uuid) {
+        map.put((String) uuid, r);
     }
 
     @Override
-    protected Resume doGet(Object key) {
-        return map.get(key.toString());
+    protected Resume doGet(Object uuid) {
+        return map.get((String) uuid);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        map.remove(key.toString());
+    protected void doDelete(Object uuid) {
+        map.remove((String) uuid);
     }
 
     @Override
@@ -64,7 +57,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        return null;
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(map.values());
     }
 }

@@ -2,21 +2,26 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+/**
+ * MapResumeStorage.
+ *
+ * @author Artur Glyzin.
+ * @version 1.0.
+ * @since 17.04.2019.
+ */
 
 public class MapResumeStorage extends AbstractStorage {
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        return map.get(uuid);
+    protected Resume getSearchKey(String resume) {
+        return map.get(resume);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object key) {
+    protected void doUpdate(Resume r, Object resume) {
         map.put(r.getUuid(), r);
     }
 
@@ -46,7 +51,7 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    public List<Resume> doCopyAll() {
         return new ArrayList<>(map.values());
     }
 
