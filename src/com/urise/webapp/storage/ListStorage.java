@@ -13,7 +13,7 @@ import java.util.List;
  * @since 17.04.2019.
  */
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private List<Resume> list = new ArrayList<>();
 
@@ -28,28 +28,28 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index != null;
+    protected boolean isExist(Integer index) {
+        return index != null;
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        list.set((Integer) searchKey, r);
+    protected void doUpdate(Resume r, Integer searchKey) {
+        list.set(searchKey, r);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Integer searchKey) {
         list.add(r);
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return list.get((Integer) index);
+    protected Resume doGet(Integer index) {
+        return list.get(index);
     }
 
     @Override
-    protected void doDelete(Object index) {
-        list.remove(((Integer) index).intValue());
+    protected void doDelete(Integer searchKey) {
+        list.remove(searchKey.intValue());
     }
 
     @Override
