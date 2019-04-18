@@ -1,16 +1,13 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public class TextSection extends Section {
-    private final String title;
     private final String content;
 
-    public TextSection(String title, String content) {
-        this.title = title;
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
         this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getContent() {
@@ -24,22 +21,16 @@ public class TextSection extends Section {
 
         TextSection that = (TextSection) o;
 
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        return content != null ? content.equals(that.content) : that.content == null;
+        return content.equals(that.content);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
+        return content.hashCode();
     }
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return content;
     }
 }

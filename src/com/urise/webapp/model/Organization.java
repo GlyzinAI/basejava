@@ -2,27 +2,27 @@ package com.urise.webapp.model;
 
 import sun.util.resources.LocaleData;
 
+import java.util.Objects;
+
 public class Organization {
-    private final String companyName;
-    private final LocaleData data;
+    private final Link homePage;
+
+
+    private final LocaleData startDate;
+    private final LocaleData endDate;
+    private final String title;
     private final String description;
 
-    public Organization(String companyName, LocaleData data, String description) {
-        this.companyName = companyName;
-        this.data = data;
+
+    public Organization(String name, String url, LocaleData startDate, LocaleData endDate, String title, String description) {
+        Objects.requireNonNull(startDate, "startDate must not be null");
+        Objects.requireNonNull(endDate, "endDate must not be null");
+        Objects.requireNonNull(title, "title must not be null");
+        this.homePage = new Link(name, url);
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
         this.description = description;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public LocaleData getData() {
-        return data;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     @Override
@@ -32,15 +32,19 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
-        if (data != null ? !data.equals(that.data) : that.data != null) return false;
+        if (!homePage.equals(that.homePage)) return false;
+        if (!startDate.equals(that.startDate)) return false;
+        if (!endDate.equals(that.endDate)) return false;
+        if (!title.equals(that.title)) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override
     public int hashCode() {
-        int result = companyName != null ? companyName.hashCode() : 0;
-        result = 31 * result + (data != null ? data.hashCode() : 0);
+        int result = homePage.hashCode();
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
+        result = 31 * result + title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
@@ -48,8 +52,10 @@ public class Organization {
     @Override
     public String toString() {
         return "Organization{" +
-                "companyName='" + companyName + '\'' +
-                ", data=" + data +
+                "homePage=" + homePage +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
