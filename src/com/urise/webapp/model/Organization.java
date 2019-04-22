@@ -1,28 +1,13 @@
 package com.urise.webapp.model;
 
-import sun.util.resources.LocaleData;
-
-import java.util.Objects;
-
 public class Organization {
     private final Link homePage;
 
+    private final Period period;
 
-    private final LocaleData startDate;
-    private final LocaleData endDate;
-    private final String title;
-    private final String description;
-
-
-    public Organization(String name, String url, LocaleData startDate, LocaleData endDate, String title, String description) {
-        Objects.requireNonNull(startDate, "startDate must not be null");
-        Objects.requireNonNull(endDate, "endDate must not be null");
-        Objects.requireNonNull(title, "title must not be null");
-        this.homePage = new Link(name, url);
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.title = title;
-        this.description = description;
+    public Organization(Link homePage, Period period) {
+        this.homePage = homePage;
+        this.period = period;
     }
 
     @Override
@@ -32,20 +17,14 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (!homePage.equals(that.homePage)) return false;
-        if (!startDate.equals(that.startDate)) return false;
-        if (!endDate.equals(that.endDate)) return false;
-        if (!title.equals(that.title)) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
+        if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
+        return period != null ? period.equals(that.period) : that.period == null;
     }
 
     @Override
     public int hashCode() {
-        int result = homePage.hashCode();
-        result = 31 * result + startDate.hashCode();
-        result = 31 * result + endDate.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = homePage != null ? homePage.hashCode() : 0;
+        result = 31 * result + (period != null ? period.hashCode() : 0);
         return result;
     }
 
@@ -53,10 +32,7 @@ public class Organization {
     public String toString() {
         return "Organization{" +
                 "homePage=" + homePage +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                ", period=" + period +
                 '}';
     }
 }

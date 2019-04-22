@@ -8,7 +8,7 @@ public enum ContactType {
     MAIL("Почта"),
     LINKEDIN("Профиль LinkedIn"),
     GITHUB("Профиль GitHub"),
-    STACKOVERFLOW("Проофиль Stackoverflow"),
+    STACKOVERFLOW("Профиль Stackoverflow"),
     HOME_PAGE("Домашняя страница");
 
 
