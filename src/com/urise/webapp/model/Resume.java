@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -9,7 +10,8 @@ import java.util.*;
  * @version 1.0.
  * @since 18.04.2019.
  */
-public class Resume implements Comparable<Resume> {
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final String uuid;
 

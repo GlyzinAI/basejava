@@ -12,9 +12,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     private File directory;
 
-    protected abstract void doWrite(Resume r, OutputStream file) throws IOException;
+    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
 
-    protected abstract Resume doRead(InputStream file) throws IOException;
+    protected abstract Resume doRead(InputStream in) throws IOException;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
