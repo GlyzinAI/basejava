@@ -50,12 +50,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         return uuid;
     }
 
-    public String getContact(ContactType type) {
-        return contacts.get(type);
+    public Map<ContactType, String> getContacts() {
+        return contacts;
     }
 
-    public Section getSection(SectionType type) {
-        return sections.get(type);
+    public Map<SectionType, Section> getSections() {
+        return sections;
     }
 
     public void addContact(ContactType type, String value) {
