@@ -1,12 +1,16 @@
 package com.urise.webapp;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
     private static int counter;
-    private static final Object LOCK = new Object();
+    private static final AtomicInteger atomicInteger = new AtomicInteger();
+    //    private static final Object LOCK = new Object();
+    private static final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
@@ -26,26 +30,39 @@ public class MainConcurrency {
         System.out.println(thread0.getState());
 
         final MainConcurrency mainConcurrency = new MainConcurrency();
-        List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
+
+        CountDownLatch latch = new CountDownLatch(THREADS_NUMBER);
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        CompletionService completionService = new ExecutorCompletionService(executorService);
+
+//        List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
         for (int i = 0; i < THREADS_NUMBER; i++) {
-            Thread thread = new Thread(() -> {
+            Future<Integer> future = executorService.submit(() ->
+                    //   Thread thread = new Thread(() -> {
+            {
                 for (int j = 0; j < 100; j++) {
                     mainConcurrency.inc();
                 }
+                latch.countDown();
+                return 5;
             });
-            thread.start();
-            threads.add(thread);
+            // thread.start();
+//            threads.add(thread);
         }
 
-        threads.forEach(t -> {
+        /*threads.forEach(t -> {
             try {
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        });
+        });*/
 
-        System.out.println(counter);
+
+        latch.await(10, TimeUnit.SECONDS);
+        executorService.shutdown();
+        //System.out.println(counter);
+        System.out.println(atomicInteger.get());
 
         final String lock1 = "lock1";
         final String lock2 = "lock2";
@@ -71,8 +88,15 @@ public class MainConcurrency {
         }).start();
     }
 
-    private synchronized void inc() {
+    private void inc() {
+        /*lock.lock();
+        try {
             counter++;
+        } finally {
+            lock.unlock();
+        }*/
+        atomicInteger.incrementAndGet();
+
     }
 }
 
