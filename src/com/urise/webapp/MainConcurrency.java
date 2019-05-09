@@ -89,12 +89,12 @@ public class MainConcurrency {
     }
 
     private void inc() {
-        /*lock.lock();
+        lock.lock();
         try {
             counter++;
         } finally {
             lock.unlock();
-        }*/
+        }
         atomicInteger.incrementAndGet();
 
     }
