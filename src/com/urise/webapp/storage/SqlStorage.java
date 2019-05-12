@@ -6,6 +6,7 @@ import com.urise.webapp.sql.SqlHelper;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements Storage {
@@ -29,12 +30,18 @@ public class SqlStorage implements Storage {
             ps.execute();
             return null;
         });
-
     }
 
     @Override
     public void update(Resume r) {
-
+        sqlHelper.<Void>execute("UPDATE resume SET full_name = ? WHERE uuid = ?", ps -> {
+            ps.setString(1, r.getFullName());
+            ps.setString(2, r.getUuid());
+            if (ps.executeUpdate() == 0) {
+                throw new NotExistStorageException(r.getUuid());
+            }
+            return null;
+        });
     }
 
     @Override
@@ -51,16 +58,32 @@ public class SqlStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-
+        sqlHelper.<Void>execute("DELETE FROM resume WHERE uuid = ?", ps -> {
+            ps.setString(1, uuid);
+            if (ps.executeUpdate() == 0) {
+                throw new NotExistStorageException(uuid);
+            }
+            return null;
+        });
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        return null;
+        return sqlHelper.execute("SELECT * FROM resume r ORDER BY full_name, uuid", ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<Resume> resumes = new ArrayList<>();
+            while (rs.next()) {
+                resumes.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
+            }
+            return resumes;
+        });
     }
 
     @Override
     public int size() {
-        return 0;
+        return sqlHelper.execute("SELECT count(*) FROM resume", st -> {
+            ResultSet rs = st.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        });
     }
 }
