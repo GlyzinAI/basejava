@@ -3,12 +3,14 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,9 +39,11 @@ public abstract class AbstractStorageTest {
         R4 = new Resume(UUID_4, "Name4");
 
 
-        /*R1.addContact(ContactType.MAIL, "mail@ya.ru");
+        R1.addContact(ContactType.MAIL, "mail@ya.ru");
         R1.addContact(ContactType.PHONE, "11111");
-        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R4.addContact(ContactType.SKYPE, "Skype");
+        R4.addContact(ContactType.PHONE, "44444");
+        /*R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
         R1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
@@ -99,12 +103,17 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> allElements = storage.getAllSorted();
         assertEquals(3, allElements.size());
-        assertEquals(allElements, Arrays.asList(R1, R2, R3));
+        List<Resume> sortedResumes = Arrays.asList(R1, R2, R3);
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, allElements);
     }
 
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1, "NewName");
+        R1.addContact(ContactType.MAIL, "mail@google.com");
+        R1.addContact(ContactType.SKYPE, "NewSkype");
+        R1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
         storage.update(newResume);
         assertTrue(newResume.equals(storage.get(UUID_1)));
     }
