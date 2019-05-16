@@ -3,8 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.ContactType;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,11 +42,11 @@ public abstract class AbstractStorageTest {
         R1.addContact(ContactType.PHONE, "11111");
         R4.addContact(ContactType.SKYPE, "Skype");
         R4.addContact(ContactType.PHONE, "44444");
-        /*R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
         R1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
-        R1.addSection(SectionType.EXPERIENCE,
+        /*R1.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization1", "http://Organization1.ru",
                                 new Organization.Position(2005, Month.JANUARY, "position1", "content1"),
@@ -57,15 +56,19 @@ public abstract class AbstractStorageTest {
                         new Organization("Institute", null,
                                 new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
                                 new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
-                        new Organization("Organization2", "http://Organization2.ru")));
+                        new Organization("Organization2", "http://Organization2.ru")));*/
 
-        R2.addContact(ContactType.SKYPE, "skype2");
+        /*R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
         R2.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization2", "http://Organization2.ru",
-                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
-*/
+                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));*/
+
+        R4.addSection(SectionType.OBJECTIVE, new TextSection("Objective2"));
+        R4.addSection(SectionType.PERSONAL, new TextSection("Personal data2"));
+        R4.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievementsss", "Achievementsss2", "Achievementssss3"));
+        R4.addSection(SectionType.QUALIFICATIONS, new ListSection("JS", "PostgreSQL", "Python"));
 
     }
 
