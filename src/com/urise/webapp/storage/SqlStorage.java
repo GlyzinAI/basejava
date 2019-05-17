@@ -137,26 +137,6 @@ public class SqlStorage implements Storage {
         });
     }
 
-    private void deleteContacts(Connection conn, Resume r) {
-        sqlHelper.<Void>execute("DELETE FROM contact WHERE resume_uuid = ?", ps -> {
-            ps.setString(1, r.getUuid());
-            ps.execute();
-            return null;
-        });
-    }
-
-    private void insertContacts(Connection conn, Resume r) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?)")) {
-            for (Map.Entry<ContactType, String> e : r.getContacts().entrySet()) {
-                ps.setString(1, r.getUuid());
-                ps.setString(2, e.getKey().name());
-                ps.setString(3, e.getValue());
-                ps.addBatch();
-            }
-            ps.executeBatch();
-        }
-    }
-
     private void addContact(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("value");
         if (value != null) {
@@ -172,23 +152,43 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void insertSections(Connection conn, Resume r) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid, type, content) VALUES (?, ?, ?)")) {
-            for (Map.Entry<SectionType, Section> s : r.getSections().entrySet()) {
+    private void insertContacts(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?)")) {
+            for (Map.Entry<ContactType, String> e : r.getContacts().entrySet()) {
                 ps.setString(1, r.getUuid());
-                ps.setString(2, s.getKey().name());
-                ps.setString(3, s.getValue().toString());
+                ps.setString(2, e.getKey().name());
+                ps.setString(3, e.getValue());
                 ps.addBatch();
             }
             ps.executeBatch();
         }
     }
 
-    private void deleteSections(Connection conn, Resume r) {
-        sqlHelper.<Void>execute("DELETE FROM section WHERE resume_uuid = ?", ps -> {
+    private void insertSections(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid, type, content) VALUES (?, ?, ?)")) {
+            for (Map.Entry<SectionType, Section> s : r.getSections().entrySet()) {
+                ps.setString(1, r.getUuid());
+                ps.setString(2, s.getKey().name());
+                Section section = s.getValue();
+                ps.setString(3, JsonParser.write(section, Section.class));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        }
+    }
+
+    private void deleteSections(Connection conn, Resume r) throws SQLException {
+        deleteAttributes(conn, r, "DELETE FROM section WHERE resume_uuid = ?");
+    }
+
+    private void deleteContacts(Connection conn, Resume r) throws SQLException {
+        deleteAttributes(conn, r, "DELETE FROM contact WHERE resume_uuid = ?");
+    }
+
+    private void deleteAttributes(Connection conn, Resume r, String sql) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, r.getUuid());
             ps.execute();
-            return null;
-        });
+        }
     }
 }
