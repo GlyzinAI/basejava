@@ -19,20 +19,36 @@ table {
     border-collapse: collapse;
     text-align: center;
 }
+
 th, td:first-child {
     background: #AFCDE7;
     color: white;
     padding: 10px 20px;
 }
+
 th, td {
     border-style: solid;
     border-width: 0 1px 1px 0;
     border-color: white;
     color: #9c4e00
 }
+
 td {
     background: #D8E6F3;
 }
+
 th:first-child, td:first-child {
     text-align: left;
 }
+
+dt {
+    display: inline-block;
+    width: 170px;
+}
+
+dd {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: top;
+}
+im

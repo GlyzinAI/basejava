@@ -98,4 +98,8 @@ public class Resume implements Comparable<Resume>, Serializable {
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }
