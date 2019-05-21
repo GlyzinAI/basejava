@@ -13,7 +13,7 @@ footer {
     margin: 20px 0;
 }
 
-table {
+/*table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 14px;
     border-collapse: collapse;
@@ -31,15 +31,15 @@ th, td {
     border-width: 0 1px 1px 0;
     border-color: white;
     color: #9c4e00
-}
+}*/
 
-td {
+/*td {
     background: #D8E6F3;
 }
 
 th:first-child, td:first-child {
     text-align: left;
-}
+}*/
 
 dt {
     display: inline-block;
@@ -51,4 +51,6 @@ dd {
     margin-left: 8px;
     vertical-align: top;
 }
-im
+h3 {
+    margin: 15px 0 5px 0;
+}
